@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { toast } from 'react-toastify';
-    const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { toast } from "react-toastify";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -26,16 +27,15 @@ const Login = () => {
 
       login(data.user, data.token);
       navigate("/login");
-      toast.success("login Successfully")
+      toast.success("Login Successfully");
     } catch (err) {
       toast.error(err.message);
     }
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left side - image / gradient */}
-      <div className="w-1/2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white hidden lg:flex flex-col items-center justify-center p-10">
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      <div className="w-full lg:w-1/2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white hidden lg:flex flex-col items-center justify-center p-10">
         <h1 className="text-5xl font-extrabold mb-4 tracking-tight">
           Welcome to <br className="block md:hidden" /> To-Do Board
         </h1>
@@ -49,8 +49,15 @@ const Login = () => {
         />
       </div>
 
+      {/* Mobile Top Logo */}
+      <div className="lg:hidden flex justify-center items-center py-6 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
+        <h1 className="text-3xl font-bold italic text-white">
+          To-<span className="text-yellow-300">Do</span> Board
+        </h1>
+      </div>
+
       {/* Right side - login form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white px-6">
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white px-4 py-10">
         <form
           onSubmit={handleLogin}
           className="w-full max-w-md p-8 bg-white rounded-xl shadow-xl"
@@ -85,7 +92,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full cursor-pointer bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg transition duration-200"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg transition duration-200"
           >
             Login
           </button>

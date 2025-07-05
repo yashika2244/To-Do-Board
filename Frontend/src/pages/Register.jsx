@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -22,8 +22,8 @@ const Register = () => {
       if (!res.ok) {
         throw new Error(data.message || "Registration failed");
       }
-         toast.success("✅ Registered successfully! Please login.");
 
+      toast.success("✅ Registered successfully! Please login.");
       navigate("/login");
     } catch (err) {
       toast.error(`❌ ${err.message}`);
@@ -32,33 +32,39 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Left section with gradient and illustration */}
-      <div className="w-full  hidden lg:w-1/2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 md:flex flex-col items-center justify-center p-10 text-white">
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-center">
+      {/* Desktop Left Section */}
+      <div className="hidden lg:flex w-full lg:w-1/2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white flex-col items-center justify-center p-10">
+        <h1 className="text-5xl font-extrabold mb-4 text-center">
           Join To-Do Board
         </h1>
-        <p className="text-sm md:text-lg text-center font-light text-white/90 max-w-md">
+        <p className="text-lg font-light text-white/90 text-center max-w-md">
           Create your account and start organizing tasks efficiently!
         </p>
         <img
           src="https://illustrations.popsy.co/gray/work-from-home.svg"
           alt="Register Visual"
-          className="mt-8 w-3/4 max-w-xs sm:max-w-sm md:max-w-md drop-shadow-xl"
+          className="mt-8 w-3/4 max-w-sm drop-shadow-xl"
         />
       </div>
 
-      {/* Register form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-10 bg-white">
+      <div className="lg:hidden w-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 py-5 text-center">
+        <h1 className="text-3xl font-bold italic text-white">
+          To-<span className="text-yellow-300">Do</span> Board
+        </h1>
+      </div>
+
+      {/* Form Section */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white px-4 py-10">
         <form
           onSubmit={handleRegister}
-          className="w-full max-w-md p-8 bg-white rounded-xl shadow-2xl"
+          className="w-full max-w-md p-6 sm:p-8 bg-white rounded-xl shadow-lg"
         >
-          <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
             Create an account
           </h2>
 
           <div className="mb-4">
-            <label className="block mb-1 text-sm text-gray-600">Name</label>
+            <label className="block text-sm text-gray-600 mb-1">Name</label>
             <input
               type="text"
               placeholder="Your name"
@@ -70,7 +76,7 @@ const Register = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-1 text-sm text-gray-600">Email</label>
+            <label className="block text-sm text-gray-600 mb-1">Email</label>
             <input
               type="email"
               placeholder="you@example.com"
@@ -82,7 +88,7 @@ const Register = () => {
           </div>
 
           <div className="mb-6">
-            <label className="block mb-1 text-sm text-gray-600">Password</label>
+            <label className="block text-sm text-gray-600 mb-1">Password</label>
             <input
               type="password"
               placeholder="••••••••"
@@ -95,7 +101,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full bg-purple-600 cursor-pointer hover:bg-purple-700 text-white font-semibold py-2 rounded-lg transition duration-200"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg transition duration-200"
           >
             Register
           </button>
@@ -104,7 +110,7 @@ const Register = () => {
             Already have an account?{" "}
             <span
               onClick={() => navigate("/login")}
-              className="text-purple-600 cursor-pointer font-medium hover:underline "
+              className="text-purple-600 font-medium cursor-pointer hover:underline"
             >
               Login
             </span>
