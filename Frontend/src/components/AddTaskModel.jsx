@@ -29,6 +29,7 @@ const AddTaskModal = ({ isOpen, onClose, onCreate, onUpdate, editingTask }) => {
       onCreate(formData);
     }
     setFormData({ title: "", description: "", priority: "Low" });
+      onClose();
   };
 
   if (!isOpen) return null;
