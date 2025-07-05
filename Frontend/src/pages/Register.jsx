@@ -31,9 +31,16 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Desktop Left Section */}
-      <div className="hidden lg:flex w-full lg:w-1/2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white flex-col items-center justify-center p-10">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-[#e0f2fe]">
+      {/* Mobile Top Logo */}
+      <div className="lg:hidden w-full py-5 bg-[#115d83ad] text-center">
+        <h1 className="text-3xl font-bold italic text-white">
+          To-<span className="text-yellow-300">Do</span> Board
+        </h1>
+      </div>
+
+      {/* Left Side Visual */}
+      <div className="hidden lg:flex w-full lg:w-1/2 flex-col items-center justify-center bg-[#115d83ad] text-white p-10">
         <h1 className="text-5xl font-extrabold mb-4 text-center">
           Join To-Do Board
         </h1>
@@ -47,19 +54,13 @@ const Register = () => {
         />
       </div>
 
-      <div className="lg:hidden w-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 py-5 text-center">
-        <h1 className="text-3xl font-bold italic text-white">
-          To-<span className="text-yellow-300">Do</span> Board
-        </h1>
-      </div>
-
-      {/* Form Section */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white px-4 py-10">
+      {/* Right Side - Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-10">
         <form
           onSubmit={handleRegister}
           className="w-full max-w-md p-6 sm:p-8 bg-white rounded-xl shadow-lg"
         >
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
+          <h2 className="text-3xl font-bold text-center text-[#1e293b] mb-6">
             Create an account
           </h2>
 
@@ -70,7 +71,7 @@ const Register = () => {
               placeholder="Your name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#115d83ad] outline-none"
               required
             />
           </div>
@@ -82,7 +83,7 @@ const Register = () => {
               placeholder="you@example.com"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#115d83ad] outline-none"
               required
             />
           </div>
@@ -94,14 +95,14 @@ const Register = () => {
               placeholder="••••••••"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#115d83ad] outline-none"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg transition duration-200"
+            className="w-full cursor-pointer bg-[#115d83ad] hover:bg-[#0e4a68d1] text-white font-semibold py-2 rounded-lg transition duration-200"
           >
             Register
           </button>
@@ -110,7 +111,7 @@ const Register = () => {
             Already have an account?{" "}
             <span
               onClick={() => navigate("/login")}
-              className="text-purple-600 font-medium cursor-pointer hover:underline"
+              className="text-[#0369a1] font-medium cursor-pointer hover:underline"
             >
               Login
             </span>

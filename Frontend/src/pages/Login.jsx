@@ -20,27 +20,32 @@ const Login = () => {
       });
 
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Login failed");
-      }
+      if (!res.ok) throw new Error(data.message || "Login failed");
 
       login(data.user, data.token);
-      navigate("/login");
-      toast.success("Login Successfully");
+      navigate("/");
+      toast.success("Login Successful");
     } catch (err) {
       toast.error(err.message);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      <div className="w-full lg:w-1/2 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 text-white hidden lg:flex flex-col items-center justify-center p-10">
+    <div className="min-h-screen bg-[#e0f2fe] flex flex-col lg:flex-row">
+      {/* Mobile Top Logo */}
+      <div className="lg:hidden flex justify-center items-center py-4 bg-[#115d83ad]">
+        <h1 className="text-3xl font-bold italic text-white">
+          To-<span className="text-yellow-300">Do</span> Board
+        </h1>
+      </div>
+
+      {/* Left Section (desktop only) */}
+      <div className="w-full lg:w-1/2 hidden lg:flex flex-col items-center justify-center bg-[#115d83ad] text-white p-10">
         <h1 className="text-5xl font-extrabold mb-4 tracking-tight">
-          Welcome to <br className="block md:hidden" /> To-Do Board
+          Welcome to <br /> To-Do Board
         </h1>
         <p className="text-lg font-light text-white/90">
-          Manage tasks, stay connected, and be productive.
+          Stay organized. Achieve more every day.
         </p>
         <img
           src="https://illustrations.popsy.co/gray/work-from-home.svg"
@@ -49,50 +54,44 @@ const Login = () => {
         />
       </div>
 
-      {/* Mobile Top Logo */}
-      <div className="lg:hidden flex justify-center items-center py-6 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
-        <h1 className="text-3xl font-bold italic text-white">
-          To-<span className="text-yellow-300">Do</span> Board
-        </h1>
-      </div>
-
-      {/* Right side - login form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white px-4 py-10">
+      {/* Right side - Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-[#e0f2fe] px-4 py-10">
         <form
           onSubmit={handleLogin}
-          className="w-full max-w-md p-8 bg-white rounded-xl shadow-xl"
+          className="w-full max-w-md p-8 bg-white rounded-xl shadow-md"
         >
-          <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
+          <h2 className="text-3xl font-bold text-[#1e293b] text-center mb-6">
             Sign in to your account
           </h2>
 
           <div className="mb-4">
-            <label className="block mb-1 text-sm text-gray-600">Email</label>
+            <label className="block mb-1 text-sm text-gray-700">Email</label>
             <input
               type="email"
               placeholder="you@example.com"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#115d83ad]  outline-none"
               required
             />
           </div>
 
           <div className="mb-6">
-            <label className="block mb-1 text-sm text-gray-600">Password</label>
+            <label className="block mb-1 text-sm text-gray-700">Password</label>
             <input
               type="password"
               placeholder="••••••••"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#115d83ad]  outline-none"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg transition duration-200"
+            className="w-full bg-[#115d83ad] cursor-pointer hover:bg-[#0e4a68d1]
+ text-white font-semibold py-2 rounded-lg transition duration-200"
           >
             Login
           </button>
@@ -101,7 +100,7 @@ const Login = () => {
             Don’t have an account?{" "}
             <span
               onClick={() => navigate("/register")}
-              className="text-purple-600 font-medium hover:underline cursor-pointer"
+              className="text-[#0369a1] font-medium hover:underline cursor-pointer"
             >
               Register
             </span>

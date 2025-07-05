@@ -18,6 +18,7 @@ const Kanban = () => {
   const [logs, setLogs] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [updatingTaskId, setUpdatingTaskId] = useState(null);
   const fetchTasks = async () => {
     const res = await fetch(`${BASE_URL}/api/tasks`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -54,33 +55,28 @@ const Kanban = () => {
     };
   }, []);
 
-  // const handleSmartAssign = async (taskId) => {
-  //   const res = await fetch(`${BASE_URL}/api/tasks/smart-assign/${taskId}`, {
-  //     method: "POST",
-  //     headers: { Authorization: `Bearer ${token}` },
-  //   });
-  //   await res.json();
-  //   fetchTasks();
-  // };
   const handleSmartAssign = async (taskId) => {
-  try {
-    const res = await fetch(`${BASE_URL}/api/tasks/smart-assign/${taskId}`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    try {
+      const res = await fetch(`${BASE_URL}/api/tasks/smart-assign/${taskId}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-    if (!res.ok) throw new Error("Smart assignment failed");
+      if (!res.ok) throw new Error("Smart assignment failed");
 
-    toast.success("🤖 Task smart assigned");
-    fetchTasks();
-  } catch (err) {
-    toast.error(`❌ ${err.message}`);
-  }
-};
-
-
+      toast.success("🤖 Task smart assigned");
+      fetchTasks();
+    } catch (err) {
+      toast.error(`❌ ${err.message}`);
+    }
+  };
 
   const handleStatusChange = async (task, newStatus) => {
+    const tempTasks = tasks.map((t) =>
+      t._id === task._id ? { ...t, status: newStatus } : t
+    );
+    setTasks(tempTasks);
+
     const updatedTask = {
       ...task,
       status: newStatus,
@@ -99,7 +95,7 @@ const Kanban = () => {
     if (res.status === 409) {
       const serverData = await res.json();
       setConflict({ client: updatedTask, server: serverData.serverTask });
-    } else {
+
       fetchTasks();
     }
   };
@@ -133,7 +129,7 @@ const Kanban = () => {
       toast.success("✅ Task created successfully!");
       fetchTasks();
     } catch (err) {
-       toast.error(`❌ ${err.message}`);
+      toast.error(`❌ ${err.message}`);
     }
   };
 
@@ -145,11 +141,11 @@ const Kanban = () => {
       });
 
       if (!res.ok) throw new Error("Failed to delete task");
-          toast.success("🗑️ Task deleted");
+      toast.success("🗑️ Task deleted");
       fetchTasks();
       fetchLogs();
     } catch (err) {
-        toast.error(`❌ ${err.message}`);
+      toast.error(`❌ ${err.message}`);
     }
   };
 
@@ -165,47 +161,47 @@ const Kanban = () => {
       });
 
       if (!res.ok) throw new Error("Failed to update task");
-       toast.success("✏️ Task updated");
+      toast.success("✏️ Task updated");
       setEditingTask(null);
       setShowModal(false);
       fetchTasks();
     } catch (err) {
-        toast.error(`❌ ${err.message}`);
+      toast.error(`❌ ${err.message}`);
     }
   };
 
   const statuses = ["Todo", "In Progress", "Done"];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-[#e8f0f1] to-[#8077fd]">
+    <div className="min-h-screen bg-[#f3f4f6] text-[#1f2937]">
       <Navbar />
 
-      {/* Header Section - Responsive */}
+      {/* Header */}
       <div className="px-4 py-6 md:px-10 flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
-        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 bg-white/80 px-4 py-2 rounded-xl shadow backdrop-blur border border-gray-300 whitespace-nowrap">
+        <h2 className="text-xl sm:text-2xl font-semibold px-4 py-2 rounded-xl bg-white shadow text-[#1f2937] border border-gray-200">
           🗂️ Kanban Dashboard
         </h2>
 
         <button
           onClick={() => setShowModal(true)}
-          className="flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 whitespace-nowrap"
+          className="flex items-center gap-2 px-5 py-2 rounded-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300"
         >
           <FaPlus className="text-sm" />
           Add Task
         </button>
       </div>
 
-      {/* Columns and Activity */}
-      <div className="px-4 py-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
+      {/* Kanban Columns */}
+      <div className="px-4 md:py-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
         {statuses.map((status) => {
           const filteredTasks = tasks.filter((task) => task.status === status);
 
           return (
             <div
               key={status}
-              className="flex-1 bg-white rounded-xl p-4 shadow-md"
+              className="flex-1 bg-white rounded-xl p-4 shadow-md border border-gray-200"
             >
-              <h3 className="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">
+              <h3 className="text-xl font-bold text-[#1a4079] mb-4 border-b pb-2">
                 {status}
               </h3>
 
@@ -249,6 +245,7 @@ const Kanban = () => {
         />
       )}
 
+      {/* Task Modal */}
       <AddTaskModal
         isOpen={showModal}
         onClose={() => {

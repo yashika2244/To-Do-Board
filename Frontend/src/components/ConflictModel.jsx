@@ -1,5 +1,3 @@
-
-
 const ConflictModal = ({ conflict, onResolve, onCancel }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm px-4">
@@ -8,7 +6,9 @@ const ConflictModal = ({ conflict, onResolve, onCancel }) => {
         <h3 className="text-xl font-semibold text-red-600 flex items-center gap-2">
           ⚠️ Conflict Detected
         </h3>
-        <p className="text-gray-600">Two versions of the task exist. Choose which one to keep:</p>
+        <p className="text-gray-600">
+          Two versions of the task exist. Choose which one to keep:
+        </p>
 
         {/* Conflict Comparison */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -28,7 +28,9 @@ const ConflictModal = ({ conflict, onResolve, onCancel }) => {
 
           {/* Server Version */}
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-2">
-            <h4 className="text-sm font-bold text-gray-700">☁️ Server Version</h4>
+            <h4 className="text-sm font-bold text-gray-700">
+              ☁️ Server Version
+            </h4>
             <pre className="text-xs text-gray-800 bg-white p-2 rounded overflow-x-auto border border-gray-200">
               <code>{JSON.stringify(conflict.server, null, 2)}</code>
             </pre>

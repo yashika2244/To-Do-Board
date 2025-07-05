@@ -8,7 +8,6 @@ const AddTaskModal = ({ isOpen, onClose, onCreate, onUpdate, editingTask }) => {
     priority: "Low",
   });
 
-  // Pre-fill form if editing
   useEffect(() => {
     if (editingTask) {
       setFormData({
